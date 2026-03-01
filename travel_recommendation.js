@@ -51,15 +51,37 @@ searchBtn.addEventListener("click", function (event) {
 
             
             data.countries.forEach(country => {
-                country.cities.forEach(city => {
-                    if (
-                        city.name.toLowerCase().includes(keyword) ||
-                        city.description.toLowerCase().includes(keyword) ||
-                        country.name.toLowerCase().includes(keyword)
-                    ) {
+
+                // 🔹 If user types "country" or "countries"
+                if (keyword.includes("country")) {
+            
+                    country.cities.forEach(city => {
                         results.push(city);
-                    }
-                });
+                    });
+            
+                }
+            
+                // 🔹 If user types specific country name (Japan, Brazil, etc.)
+                else if (country.name.toLowerCase().includes(keyword)) {
+            
+                    country.cities.forEach(city => {
+                        results.push(city);
+                    });
+            
+                }
+            
+                // 🔹 If user types specific city name or description
+                else {
+                    country.cities.forEach(city => {
+                        if (
+                            city.name.toLowerCase().includes(keyword) ||
+                            city.description.toLowerCase().includes(keyword)
+                        ) {
+                            results.push(city);
+                        }
+                    });
+                }
+            
             });
 
             
